@@ -1,22 +1,25 @@
-### 1. Setup
-#### Firstly you need to setup your VM and Docker on your VM
+## 1. Setup
+### 1.1 Firstly you need to setup your VM and Docker on your VM
 - You can setup your Linux virtual machine on VMware or Virtualbox or on some hypervisor you like
 - To setup docker you can follow this link [How to install Docker](https://docs.docker.com/engine/install/)
-#### Get wordpress image and Mariadb image
+### 1.2 Get wordpress image and Mariadb image
 Get Wordpress image and Maria Image created by binami on docker hub.[Docker hub registry](https://hub.docker.com/r/bitnami/wordpress)
-  - Download Wordpress image:
+
 > $ docker pull bitnami/wordpress:latest
-  - To use a specific version, you can pull a versioned tag. You can view [the list of available versions](https://hub.docker.com/r/bitnami/wordpress) in the Docker Hub Registry.
+
+To use a specific version, you can pull a versioned tag. You can view [the list of available versions](https://hub.docker.com/r/bitnami/wordpress) in the Docker Hub Registry.
+
 > $ docker pull bitnami/wordpress:[TAG] 
 
-### 2 Practice
+- Do the same to get Mariadb.
+## 2. Instruction
 ### Practice 1: Deploy Docker with command line.
 
 #### Step 1: Create a network:
 > $ docker network create wordpress-network
 #### Step 2: Create a volume for MariaDB persistence
 > $ docker volume create --name mariadb_data
-#### Step 3: Create your Mariadb:
+#### Step 3: Create your MariaDB container:
 > $ docker run -d --name mariadb \
   --env ALLOW_EMPTY_PASSWORD=yes \
   --env MARIADB_USER=bn_wordpress \
@@ -27,3 +30,25 @@ Get Wordpress image and Maria Image created by binami on docker hub.[Docker hub 
   bitnami/mariadb:latest
   
 **Note**: Make sure you have downloaded mariadb image.
+
+#### Step 4: Create a volume for Wordpress persistence
+> $ docker volume create --name wordpress_data
+#### Step 5: Create your Wordpress container:
+> $ docker run -d --name wordpress \
+  -p 8080:8080 -p 8443:8443 \
+  --env ALLOW_EMPTY_PASSWORD=yes \
+  --env WORDPRESS_DATABASE_USER=bn_wordpress \
+  --env WORDPRESS_DATABASE_PASSWORD=bitnami \
+  --env WORDPRESS_DATABASE_NAME=bitnami_wordpress \
+  --network wordpress-network \
+  --volume wordpress_data:/bitnami/wordpress \
+  bitnami/wordpress:latest
+ 
+ After running you can check your container is running using command:
+ > $ sudo docker ps
+ ![](https://github.com/VuduclongPtit/Docker-Kubernetes/blob/master/Practice/practice%201/Screenshot%20from%202021-05-07%2022-22-41.png?raw=true)
+
+Now you can check your web app by go browser and go to this link : <your_ip_address>:8080.
+*You can check your ip address by using this command*:
+> $ ip a
+
