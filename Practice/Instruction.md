@@ -109,9 +109,9 @@ Result:
   --volume wordpress_data:/bitnami/wordpress \
   bitnami/wordpress:latest
 
-**Note**: - Using `network host` 
-
-          - `add-host` to add a single host to IP mapping within a Docker container. we add `mariadb:<ip-vm1>` to connect wordpress container in VM2 to mariadb container in VM1
+**Note**: 
+- Using `network host` 
+- Using `add-host` to add a single host to IP mapping within a Docker container. we add `mariadb:<ip-vm1>` to connect wordpress container in VM2 to mariadb container in VM1
 
 ![](https://github.com/VuduclongPtit/Docker-Kubernetes/blob/master/Practice/practice%203/run%20container%20wordpress.png?raw=true)
 
