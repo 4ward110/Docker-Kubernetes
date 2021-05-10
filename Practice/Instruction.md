@@ -46,9 +46,35 @@ To use a specific version, you can pull a versioned tag. You can view [the list 
  
  After running you can check your container is running using command:
  > $ sudo docker ps
- ![](https://github.com/VuduclongPtit/Docker-Kubernetes/blob/master/Practice/practice%201/Screenshot%20from%202021-05-07%2022-22-41.png?raw=true)
+ ![](https://github.com/VuduclongPtit/Docker-Kubernetes/blob/master/Practice/practice%201/container.png?raw=true)
 
 Now you can check your web app by go browser and go to this link : <your_ip_address>:8080.
 *You can check your ip address by using this command*:
 > $ ip a
+![](https://github.com/VuduclongPtit/Docker-Kubernetes/blob/master/Practice/practice%201/checkip.png?raw=true)
+
+And this reresult:
+
+![](https://github.com/VuduclongPtit/Docker-Kubernetes/blob/master/Practice/practice%201/Screenshot%20from%202021-05-07%2022-24-38.png?raw=true)
+
+
+### Practice 2: Deploy Wordpress with Docker-Compose.
+#### Step 1: Install docker-compose:
+> $ sudo apt-get install docker-compose
+> 
+#### Step 2: Get `docker-compose.yml` 
+> $ curl -sSL https://raw.githubusercontent.com/bitnami/bitnami-docker-wordpress/master/docker-compose.yml > docker-compose.yml
+> 
+#### Step 3: Run docker-compose
+> $ docker-compose up -d
+> 
+
+Container is running:
+![](https://github.com/VuduclongPtit/Docker-Kubernetes/blob/master/Practice/practice%202/Screenshot%20from%202021-05-07%2022-34-55.png?raw=true)
+
+Out come:
+![](https://github.com/VuduclongPtit/Docker-Kubernetes/blob/master/Practice/practice%202/Screenshot%20from%202021-05-07%2022-35-09.png?raw=true)
+
+### Practice 3: Deploy Wordpress with command-line in two virtual machine
+
 
