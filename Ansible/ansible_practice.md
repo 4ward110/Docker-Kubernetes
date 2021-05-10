@@ -91,7 +91,35 @@ Result:
 Expect: 
 ![](https://github.com/VuduclongPtit/Docker-Kubernetes/blob/master/Ansible/pic/installed%20docker%20dockercompose.png?raw=true)
 
-Check the container:
+#### Create `deploy-wordpress-playbook.yaml`file.
+- Add code an run to deploy docker-compose file:
+```
+- name: deploy wordpress
+  hosts: vm1
+  gather_facts: false
+
+  tasks:
+  - name: pull docker compose yaml
+    become: yes
+    get_url:
+     url: https://raw.githubusercontent.com/bitnami/bitnami-docker-wordpress/master/docker-compose.yml
+     dest: /home/long/docker-compose.yml
+  - name: run docker compose
+    become: yes
+    command: docker-compose up -d
+  - name: ensure docker-compose container is running
+    become: yes
+    docker_container_info:
+     name: my_container
+    register: result
+```
+**Run**:
+> $ ansible-playbook -i inventory.ini deploy-wordpress-playbook.yaml -k -K
+
+Expect output:
+![](https://github.com/VuduclongPtit/Docker-Kubernetes/blob/master/Ansible/pic/running%20docker%20compose%20and%20make%20sure%20it%20runnign.png?raw=true)
+
+Check the container is running:
 ![](https://github.com/VuduclongPtit/Docker-Kubernetes/blob/master/Ansible/pic/check_container.png?raw=true)
 
 => Result:
