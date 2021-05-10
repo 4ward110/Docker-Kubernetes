@@ -77,4 +77,43 @@ Out come:
 
 ### Practice 3: Deploy Wordpress with command-line in two virtual machine
 
+#### Step 1: Create 2 VM in your computer and setup docker in there.
+#### Step 2: Create a volume for MariaDB persistence and create a MariaDB container in VM 1.
+> $ docker volume create --name mariadb_data
 
+> $ docker run -d --name mariadb \
+  --env ALLOW_EMPTY_PASSWORD=yes \
+  --env MARIADB_USER=bn_wordpress \
+  --env MARIADB_PASSWORD=bitnami \
+  --env MARIADB_DATABASE=bitnami_wordpress \
+  --network host \
+  --volume mariadb_data:/bitnami/mariadb \
+  bitnami/mariadb:latest
+ 
+ **Note**: change the network to `host` instead of `wordpress-network`. when we change network to host network it's mean container’s network stack is not isolated from the Docker host (the container shares the host’s networking namespace), and the container does not get its own IP-address allocated.  For instance, if you run a container which binds to port 80 and you use host networking, the container’s application is available on port 80 on the host’s IP address.
+
+Result: 
+ ![](https://github.com/VuduclongPtit/Docker-Kubernetes/blob/master/Practice/practice%203/run%20container%20db.png?raw=true)
+#### Step 3: Create a volume for Wordpress persistence and create a Wordpress container in VM 2.
+
+> $ docker volume create --name wordpress_data
+
+> $ docker run -d --name wordpress \
+  -p 8080:8080 -p 8443:8443 \
+  --env ALLOW_EMPTY_PASSWORD=yes \
+  --env WORDPRESS_DATABASE_USER=bn_wordpress \
+  --env WORDPRESS_DATABASE_PASSWORD=bitnami \
+  --env WORDPRESS_DATABASE_NAME=bitnami_wordpress \
+  --network host \
+  --add-host mariadb:<ip_add_vm1>
+  --volume wordpress_data:/bitnami/wordpress \
+  bitnami/wordpress:latest
+
+**Note**: - Using `network host` 
+
+          - `add-host` to add a single host to IP mapping within a Docker container. we add `mariadb:<ip-vm1>` to connect wordpress container in VM2 to mariadb container in VM1
+
+![](https://github.com/VuduclongPtit/Docker-Kubernetes/blob/master/Practice/practice%203/run%20container%20wordpress.png?raw=true)
+
+=> Result: 
+![](https://github.com/VuduclongPtit/Docker-Kubernetes/blob/master/Practice/practice%203/result.png?raw=true)
