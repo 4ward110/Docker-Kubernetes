@@ -5,9 +5,13 @@
   "author": "vuduclong10a1cma@gmail.com",
   "main": "app.js",
   "scripts": {
-    "start": "node app.js"
+    "start": "node app.js",
+    "test": "npm install inherits && mocha"
   },
   "dependencies": {
+    "express": "^4.17.1",
+    "inherits": "^2.0.3",
+    "mocha": "^8.4.0",
     "test": "^0.6.0"
   }
 }
